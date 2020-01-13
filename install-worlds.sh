@@ -1,14 +1,20 @@
 #!/bin/bash
-export WINEPREFIX=$1
+export WINEPREFIX=$HOME/.local/share/wineprefixes/worlds
 export WINEARCH=win32
 export DIR="$WINEPREFIX/drive_c/Program Files/Worlds/WorldsPlayer by Worlds.com"
 export DIREXE="$DIR/run.exe"
 
+start () {
+	rm -rf "$DIR/downloads"
+	mkdir -p "$DIR/downloads"
+	if [ $1 == "fresh" ]; then
+		rm -rf $WINEPREFIX
+	fi
+	prefix
+}
+
 prefix () {
 	echo "Settings up the Wine prefix..."
-	if [ -z "$WINEPREFIX" ]; then
-		WINEPREFIX=$HOME/.local/share/wineprefixes/worlds
-	fi
 	wine init
 	if ! [ -x "$(command -v winetricks)" ]; then
 		echo "Error: 'winetricks' not found! Please add it to your path or install it via your package manager."
@@ -22,7 +28,6 @@ prefix () {
 }
 
 install () {
-	mkdir -p "$DIR/downloads"
 	cd "$DIR/downloads"
 	echo "Downloading Java 6u45 Windows i586..."
 	wget --user=$(zenity --forms --title="Oracle Login" --text="An Oracle account is required to download the installer" --add-entry="Email") --password=$(zenity --forms --title="Oracle Login" --text="An Oracle account is required to download the installer" --add-password="Password") https://download.oracle.com/otn/java/jdk/6u45-b06/jre-6u45-windows-i586.exe
@@ -30,11 +35,12 @@ install () {
 		echo "JRE6 installer not found! Aborting!"
 		exit 1
 	fi
-	wine "jre-6u45-windows-i586 /s"
+	wine jre-6u45-windows-i586 /s
 	echo "Downloading Installer..."
 	wget "http://cache.worlds.com/downloads/1900/Worlds1900.exe"
 	echo "Installing Worlds 1900. Please complete the setup."
 	wine "Worlds1900.exe"
+	killall run.exe Worlds1900.exe javaw.exe
 	audio
 }
 
@@ -42,9 +48,9 @@ audio () {
 	echo "Setting up Audio prerequisites..."
 	cd "$DIR/downloads"
 	wget "https://www.dropbox.com/s/el0co8k0n0ps6a2/BCM1043.exe"
+	wine BCM1043.exe /s
 	wget "https://github.com/Nevcairiel/LAVFilters/releases/download/0.74.1/LAVFilters-0.74.1-Installer.exe"
-	wine "$DIR/downloads/BCM1043.exe /s"
-	wine "$DIR/downloads/LAVFilters-0.74.1-Installer.exe /s"
+	wine LAVFilters-0.74.1-Installer.exe /s
 	script
 }
 
@@ -64,4 +70,4 @@ script () {
 	echo "Setup done!"
 }
 
-prefix
+start
