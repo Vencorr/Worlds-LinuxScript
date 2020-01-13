@@ -1,11 +1,14 @@
 #!/bin/bash
-export WINEPREFIX=$HOME/.local/share/wineprefixes/worlds
+export WINEPREFIX=$1
 export WINEARCH=win32
 export DIR="$WINEPREFIX/drive_c/Program Files/Worlds/WorldsPlayer by Worlds.com"
 export DIREXE="$DIR/run.exe"
 
 prefix () {
 	echo "Settings up the Wine prefix..."
+	if [ -z "$WINEPREFIX" ]; then
+		WINEPREFIX=$HOME/.local/share/wineprefixes/worlds
+	fi
 	wine init
 	if ! [ -x "$(command -v winetricks)" ]; then
 		echo "Error: 'winetricks' not found! Please add it to your path or install it via your package manager."
