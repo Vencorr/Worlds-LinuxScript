@@ -22,7 +22,7 @@ install () {
 	mkdir -p "$DIR/downloads"
 	cd "$DIR/downloads"
 	echo "Downloading Java 6u45 Windows i586..."
-	wget --user=$(zenity --forms --title="Oracle Login" --text="An Oracle account is required to download the installer" --add-entry="Email") --ask-password https://download.oracle.com/otn/java/jdk/6u45-b06/jre-6u45-windows-i586.exe
+	wget --user=$(zenity --forms --title="Oracle Login" --text="An Oracle account is required to download the installer" --add-entry="Email") --password=$(zenity --forms --title="Oracle Login" --text="An Oracle account is required to download the installer" --add-password="Password") https://download.oracle.com/otn/java/jdk/6u45-b06/jre-6u45-windows-i586.exe
 	if ! [ -f "$DIR/downloads/jre-6u45-windows-i586.exe" ]; then
 		echo "JRE6 installer not found! Aborting!"
 		exit 1
