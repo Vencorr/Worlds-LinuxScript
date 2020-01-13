@@ -1,7 +1,7 @@
 #!/bin/bash
 export WINEPREFIX=$HOME/.local/share/wineprefixes/worlds
 export WINEARCH=win32
-export DIR="$WINEPREFIX/drive_c/Program Files/Worlds/WorldsPlayer by Worlds.com/"
+export DIR="$WINEPREFIX/drive_c/Program Files/Worlds/WorldsPlayer by Worlds.com"
 export DIREXE="$DIR/run.exe"
 
 prefix () {
@@ -38,8 +38,8 @@ install () {
 audio () {
 	echo "Setting up Audio prerequisites..."
 	cd "$DIR/downloads"
-	wget https://www.dropbox.com/s/el0co8k0n0ps6a2/BCM1043.exe
-	wget wget https://github.com/Nevcairiel/LAVFilters/releases/download/0.74.1/LAVFilters-0.74.1-Installer.exe
+	wget "https://www.dropbox.com/s/el0co8k0n0ps6a2/BCM1043.exe"
+	wget "https://github.com/Nevcairiel/LAVFilters/releases/download/0.74.1/LAVFilters-0.74.1-Installer.exe"
 	wine "$DIR/downloads/BCM1043.exe /s"
 	wine "$DIR/downloads/LAVFilters-0.74.1-Installer.exe /s"
 	script
@@ -47,6 +47,7 @@ audio () {
 
 script () {
 	WORLDSSCRIPT=$HOME/worlds.sh
+	rm $WORLDSSCRIPT
 	touch "$WORLDSSCRIPT"
 	echo "#!/bin/sh" >> "$WORLDSSCRIPT"
 	echo "export WINEPREFIX=$WINEPREFIX" >> "$WORLDSSCRIPT"
