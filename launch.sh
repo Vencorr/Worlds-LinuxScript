@@ -27,7 +27,7 @@ main() {
 		FALSE 'Clear Cache' 2>/dev/null )
 	case $sel in
 	'Start Worlds')
-		$WORLDSDIR/proton/dist/bin/wine "$WORLDSINSTALL/run.exe" ;;
+		$(which wine) "$WORLDSINSTALL/run.exe" ;;
   'Open Worlds folder')
 		gio open "$WORLDSINSTALL"
     main ;;
