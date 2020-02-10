@@ -22,12 +22,12 @@ main() {
     FALSE 'Open Worlds folder' \
 		FALSE 'Edit worlds.ini' \
     FALSE 'Backup Worlds files' \
-    FALSE 'Restore last backup' \
+    FALSE 'Restore from backup' \
     FALSE 'Set theme' \
 		FALSE 'Clear Cache' 2>/dev/null )
 	case $sel in
 	'Start Worlds')
-		wine "$WORLDSINSTALL/run.exe" ;;
+		$WORLDSDIR/proton/dist/bin/wine "$WORLDSINSTALL/run.exe" ;;
   'Open Worlds folder')
 		gio open "$WORLDSINSTALL"
     main ;;
@@ -35,7 +35,7 @@ main() {
 		xdg-open "$WORLDSINSTALL/worlds.ini"
 		main ;;
   'Backup Worlds files')
-    mkdir -p "$WORLDSDIR/backup"
+    mkdir -p "$WORLDSDIR/backups"
     bkup=$(zenity  --file-selection --title="Select Backup folder to backup to" --directory --filename="$WORLDSDIR/backups/" --save)
     if [[ $? -eq 1 ]]; then
       main
@@ -48,8 +48,8 @@ main() {
       cp -r "$WORLDSINSTALL/gamma.worldsmarks" "$bkup/gamma.worldsmarks"
       main
     fi ;;
-  'Restore last backup')
-    mkdir -p "$WORLDSDIR/backup"
+  'Restore from backup')
+    mkdir -p "$WORLDSDIR/backups"
     rbkup=$(zenity  --file-selection --title="Select Backup folder to restore from" --directory --filename="$WORLDSDIR/backups/")
     if [[ $? -eq 1 ]]; then
       main
@@ -63,6 +63,7 @@ main() {
       main
     fi ;;
   'Set theme' )
+    mkdir -p "$WORLDSDIR/themes"
     seltheme=$(zenity  --file-selection --title="Select a theme folder" --directory --filename="$WORLDSDIR/themes/")
     if [[ $? -eq 1 ]]; then
       main
