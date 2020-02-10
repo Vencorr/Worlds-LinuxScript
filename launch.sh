@@ -37,34 +37,46 @@ main() {
   'Backup Worlds files')
     mkdir -p "$WORLDSDIR/backup"
     bkup=$(zenity  --file-selection --title="Select Backup folder to backup to" --directory --filename="$WORLDSDIR/backups/" --save)
-    echo "$WORLDSINSTALL/worlds.ini >> $bkup/worlds.ini"
-    cp -r "$WORLDSINSTALL/worlds.ini" "$bkup/worlds.ini"
-    echo "$WORLDSINSTALL/gamma.avatars >> $bkup/gamma.avatars"
-    cp -r "$WORLDSINSTALL/gamma.avatars" "$bkup/gamma.avatars"
-    echo "$WORLDSINSTALL/gamma.worldsmarks >> $bkup/gamma.worldsmarks"
-    cp -r "$WORLDSINSTALL/gamma.worldsmarks" "$bkup/gamma.worldsmarks"
-    main ;;
+    if [[ $? -eq 1 ]]; then
+      main
+    else
+      echo "$WORLDSINSTALL/worlds.ini >> $bkup/worlds.ini"
+      cp -r "$WORLDSINSTALL/worlds.ini" "$bkup/worlds.ini"
+      echo "$WORLDSINSTALL/gamma.avatars >> $bkup/gamma.avatars"
+      cp -r "$WORLDSINSTALL/gamma.avatars" "$bkup/gamma.avatars"
+      echo "$WORLDSINSTALL/gamma.worldsmarks >> $bkup/gamma.worldsmarks"
+      cp -r "$WORLDSINSTALL/gamma.worldsmarks" "$bkup/gamma.worldsmarks"
+      main
+    fi ;;
   'Restore last backup')
     mkdir -p "$WORLDSDIR/backup"
     rbkup=$(zenity  --file-selection --title="Select Backup folder to restore from" --directory --filename="$WORLDSDIR/backups/")
-    echo "$rbkup/worlds.ini >> $WORLDSINSTALL/worlds.ini"
-    cp -r "$rbkup/worlds.ini" "$WORLDSINSTALL/worlds.ini"
-    echo "$rbkup/gamma.avatars >> $WORLDSINSTALL/gamma.avatars"
-    cp -r "$rbkup/gamma.avatars" "$WORLDSINSTALL/gamma.avatars"
-    echo "$rbkup/gamma.worldsmarks >> $WORLDSINSTALL/gamma.worldsmarks"
-    cp -r "$rbkup/gamma.worldsmarks" "$WORLDSINSTALL/gamma.worldsmarks"
-    main ;;
+    if [[ $? -eq 1 ]]; then
+      main
+    else
+      echo "$rbkup/worlds.ini >> $WORLDSINSTALL/worlds.ini"
+      cp -r "$rbkup/worlds.ini" "$WORLDSINSTALL/worlds.ini"
+      echo "$rbkup/gamma.avatars >> $WORLDSINSTALL/gamma.avatars"
+      cp -r "$rbkup/gamma.avatars" "$WORLDSINSTALL/gamma.avatars"
+      echo "$rbkup/gamma.worldsmarks >> $WORLDSINSTALL/gamma.worldsmarks"
+      cp -r "$rbkup/gamma.worldsmarks" "$WORLDSINSTALL/gamma.worldsmarks"
+      main
+    fi ;;
   'Set theme' )
     seltheme=$(zenity  --file-selection --title="Select a theme folder" --directory --filename="$WORLDSDIR/themes/")
-    for i in $seltheme/*;
-      do FILENAME="$(basename $i)"
-      echo "$seltheme/$FILENAME >> $WORLDSINSTALL/$FILENAME"
-      ln -sf "$seltheme/$FILENAME" "$WORLDSINSTALL/$FILENAME"
-    done
-    main ;;
+    if [[ $? -eq 1 ]]; then
+      main
+    else
+      for i in $seltheme/*;
+        do FILENAME="$(basename $i)"
+        echo "$seltheme/$FILENAME >> $WORLDSINSTALL/$FILENAME"
+        ln -sf "$seltheme/$FILENAME" "$WORLDSINSTALL/$FILENAME"
+      done
+      main
+    fi ;;
   'Clear Cache')
 		  rm -rf "$WORLDSINSTALL/cachedir"
-    main ;;
+      main ;;
 	esac
 }
 
