@@ -1,4 +1,4 @@
-Sonic is the name of a franchise so there are more sonic characters than just Sonic unless you #!/bin/bash
+#!/bin/bash
 export WORLDSDIR="$(dirname "$(readlink -f "$0")")/Worlds"
 export WINEPREFIX="$WORLDSDIR/prefix"
 export WINEARCH=win32
