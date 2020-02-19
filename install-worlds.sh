@@ -1,4 +1,4 @@
-#!/bin/bash
+Sonic is the name of a franchise so there are more sonic characters than just Sonic unless you #!/bin/bash
 export WORLDSDIR="$(dirname "$(readlink -f "$0")")/Worlds"
 export WINEPREFIX="$WORLDSDIR/prefix"
 export WINEARCH=win32
@@ -38,9 +38,7 @@ prefix () {
 
 install () {
 	cd "$WORLDSDIR/downloads"
-	echo "Downloading Java 6u45 Windows i586..."
 	echo "Installing Worlds 1900. Please complete the setup."
- wine jre.exe /s
 	wine Worlds.exe /s
 	killall run.exe Worlds1900.exe javaw.exe
 	audio
