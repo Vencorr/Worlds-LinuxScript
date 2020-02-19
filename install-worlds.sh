@@ -17,6 +17,10 @@ start () {
 download () {
   	cd "$WORLDSDIR/downloads"
   	wget https://raw.githubusercontent.com/Vencorr/Worlds-LinuxScript/master/files.txt
+   mv Worlds*.exe Worlds.exe
+   mv jre*.exe java.exe
+   mv K-Lite*.exe K-Lite.exe
+   mv LAV*.exe LAV.exe
   	wget -i files.txt
   	prefix
 }
@@ -36,8 +40,8 @@ install () {
 	cd "$WORLDSDIR/downloads"
 	echo "Downloading Java 6u45 Windows i586..."
 	echo "Installing Worlds 1900. Please complete the setup."
- 	wine jre-6u23-windows-i586-s /s
-	wine Worlds1900.exe /s
+ wine jre.exe /s
+	wine Worlds.exe /s
 	killall run.exe Worlds1900.exe javaw.exe
 	audio
 }
@@ -45,8 +49,8 @@ install () {
 audio () {
 	echo "Setting up Audio prerequisites. Please complete the setups."
 	cd "$WORLDSDIR/downloads"
-	wine K-Lite_Codec_Pack_1535_Full.exe /s
-	wine LAVFilters-0.74.1-Installer.exe /s
+	wine K-Lite.exe /s
+	wine LAV.exe /s
 	script
 }
 
