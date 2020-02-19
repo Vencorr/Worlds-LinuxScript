@@ -17,11 +17,11 @@ start () {
 download () {
   	cd "$WORLDSDIR/downloads"
   	wget https://raw.githubusercontent.com/Vencorr/Worlds-LinuxScript/master/files.txt
+  	wget -i files.txt
    mv Worlds*.exe Worlds.exe
    mv jre*.exe java.exe
    mv K-Lite*.exe K-Lite.exe
    mv LAV*.exe LAV.exe
-  	wget -i files.txt
   	prefix
 }
 
