@@ -6,15 +6,16 @@ export WORLDSINSTALL="$WINEPREFIX/drive_c/Program Files/Worlds/WorldsPlayer by W
 
 mkdir -p $WORLDSDIR/backups $WORLDSDIR/themes
 
-if [ ! -d "$WORLDSDIR/wine.worldslinux" ]; then
+if [ -f "$WORLDSDIR/wine.worldslinux" ]; then
   export WINE=$(cat "$WORLDSDIR/wine.worldslinux")
 fi
-if [ ! -d "$WORLDSDIR/wineprefix.worldslinux" ]; then
+if [ -f "$WORLDSDIR/wineprefix.worldslinux" ]; then
   export WINEPREFIX=$(cat "$WORLDSDIR/wineprefix.worldslinux")
 fi
-if [ ! -d "$WORLDSDIR/worlds.worldslinux" ]; then
+if [ -f "$WORLDSDIR/worlds.worldslinux" ]; then
   export WORLDSINSTALL=$(cat "$WORLDSDIR/worlds.worldslinux")
 fi
+cd "$WORLDSINSTALL"
 
 main() {
   sel=$(zenity \
@@ -66,9 +67,9 @@ launch () {
   WORLDSNEW="WorldsPlayer.exe"
   WORLDSOLD="run.exe"
   WORLDSLEGACY="run.bat"
-  if [ ! -d "$WORLDSINSTALL/$WORLDSNEW" ]; then
+  if [ -f "$WORLDSINSTALL/$WORLDSNEW" ]; then
     $WINE "$WORLDSINSTALL/$WORLDSNEW"
-  elif [ ! -d "$WORLDSINSTALL/$WORLDSOLD" ]; then
+  elif [ -f "$WORLDSINSTALL/$WORLDSOLD" ]; then
     $WINE "$WORLDSINSTALL/$WORLDSOLD"
   else
     $WINE "$WORLDSINSTALL/$WORLDSLEGACY"
