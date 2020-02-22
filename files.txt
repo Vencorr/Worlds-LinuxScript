@@ -1,4 +1,0 @@
-http://cache.worlds.com/test/WorldsPlayerWin7-1922a09.exe
-https://files3.codecguide.com/K-Lite_Codec_Pack_1535_Full.exe
-https://github.com/Nevcairiel/LAVFilters/releases/download/0.74.1/LAVFilters-0.74.1-Installer.exe
-https://raw.githubusercontent.com/Vencorr/Worlds-LinuxScript/master/launch.sh
