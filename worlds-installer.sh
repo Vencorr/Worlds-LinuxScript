@@ -145,7 +145,8 @@ worlds () {
 }
 
 launchscript () {
-  wget -O"$WORLDSDIR/launch.sh" "https://github.com/Vencorr/Worlds-LinuxScript/blob/master/launch.sh"
+  wget -O"$WORLDSDIR/launch.sh" "https://raw.githubusercontent.com/Vencorr/Worlds-LinuxScript/master/launch.sh"
+  chmod +x "$WORLDSDIR/launch.sh"
   wget -O"$WORLDSDIR/icon.png" "https://raw.githubusercontent.com/Vencorr/Worlds-LinuxScript/master/icon.png"
   rm "$WORLDSDIR/wine.worlds" "$WORLDSDIR/wineprefix.worlds" "$WORLDSDIR/worlds.worlds"
   echo "$WINE" > "$WORLDSDIR/wine.worldslinux"
