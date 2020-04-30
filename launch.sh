@@ -4,6 +4,7 @@ export WORLDSDIR="$(dirname "$(readlink -f "$0")")"
 export WINEPREFIX=$WORLDSDIR/prefix
 export WORLDSINSTALL="$WINEPREFIX/drive_c/Program Files/Worlds/WorldsPlayer by Worlds.com"
 export SETTHEME="DEFAULT"
+export WINE="/usr/bin/wine"
 
 mkdir -p $WORLDSDIR/backups $WORLDSDIR/themes
 
@@ -40,19 +41,19 @@ main() {
 		'Open Worlds folder')
 			gio open "$WORLDSINSTALL" ;;
 		'Settings' )
-			settings 
+			settings
 			main ;;
 		'Clear Cache')
-			cache 
+			cache
 			main ;;
 		'Force Kill' )
-			killw 
+			killw
 			main ;;
 		'Open Github page' )
-			xdg-open "https://github.com/Vencorr/Worlds-LinuxScript" 
+			xdg-open "https://github.com/Vencorr/Worlds-LinuxScript"
 			main ;;
 	esac
-	if [ "$?" != 0 ] 
+	if [ "$?" != 0 ]
 	then
 		exit
 	fi
@@ -78,8 +79,8 @@ settings () {
 		"Worlds Location" "$WORLDSINSTALL" \
 		"Edit worlds.ini" "" \
 		"Wine Configuration" "" \
+        "Winetricks" "" \
 		"Set Theme" "$SETTHEME" \
-		"Install Theme" "" \
 		"Backup" "" \
 		"Restore" "" \
 		2>/dev/null)
@@ -108,14 +109,17 @@ settings () {
 		'Wine Configuration')
 			"$WINE"cfg
 			settings ;;
+        'Winetricks')
+			winetricks
+			settings ;;
 		'Set Theme')
-			theme 
+			theme
 			settings ;;
 		'Backup')
-			backup 
+			backup
 			settings ;;
 		'Restore')
-			restore 
+			restore
 			settings ;;
 	esac
 	echo "# Configuration for Worlds on Linux." > "$WORLDSDIR/wrldslinux"
@@ -149,8 +153,8 @@ theme () {
 	)
 	declare -A map
 	for key in "${!acceptimg[@]}"; do map[${acceptimg[$key]}]="$key"; done
-	
-	
+
+
 	mkdir -p "$WORLDSDIR/themes"
 	cd "$WORLDSDIR/themes"
 	# Due to some bug, this won't even accept a directory despite the option being defined. Instead using text entry.
