@@ -127,7 +127,7 @@ settings () {
 	echo "export WINEPREFIX=\"$WINEPREFIX\"" >> "$WORLDSDIR/wrldslinux"
 	echo "export WORLDSINSTALL=\"$WORLDSINSTALL\"" >> "$WORLDSDIR/wrldslinux"
 	echo "export SETTHEME=\"$SETTHEME\"" >> "$WORLDSDIR/wrldslinux"
-	echo "source \"$WORLDSDIR/wlrdscmd\"" >> "$WORLDSDIR/wrldslinux"
+	echo "source \"$WORLDSDIR/wrldscmd\"" >> "$WORLDSDIR/wrldslinux"
 }
 
 theme () {
