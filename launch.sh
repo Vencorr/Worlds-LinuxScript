@@ -18,8 +18,8 @@ main() {
 		--list \
 		--title="$TITLE" \
 		--window-icon="$WORLDSDIR/icon.png" \
-		--width=320 \
-		--height=280 \
+		--width=300 \
+		--height=300 \
 		--cancel-label='Quit' \
 		--radiolist \
 		--text 'WorldsPlayer Linux' \
@@ -27,6 +27,7 @@ main() {
 		--column 'Options' \
 		--hide-header \
 		  TRUE 'Launch Worlds' \
+		  FALSE 'Open World' \
 		  FALSE 'Launch Worlds with Logger' \
 		  FALSE 'Open Worlds folder' \
 		  FALSE 'Settings' \
@@ -36,6 +37,13 @@ main() {
 	case $sel in
 		'Launch Worlds')
 			launch ;;
+		'Open World')
+			worldsel=$(zenity --title="$WTITLE - Open World" --width=600 --entry --text="Enter a worlds URL" --entry-text="home:GroundZero/groundzero.world")
+			if [[ ! $? -eq 1 ]]; then
+				"$WINE" "$WORLDSINSTALL/bin/gdkup.exe" "$worldsel"
+			else
+				main
+			fi ;;
 		'Launch Worlds with Logger')
 			launch && tail -F "$WORLDSINSTALL/Gamma.Log.open" | zenity --text-info --auto-scroll --height=480 --width=768 --title="$TITLE - Log" --window-icon="$WORLDSDIR/icon.png" --text="Gamma.Log.open" ;;
 		'Open Worlds folder')
