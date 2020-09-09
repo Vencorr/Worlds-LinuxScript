@@ -14,12 +14,15 @@ fi
 cd "$WORLDSINSTALL"
 
 main() {
+	if [[ -f "$WORLDSDIR/.update.sh" ]]; then
+		rm "$WORLDSDIR/.update.sh"
+	fi
 	sel=$(zenity \
 		--list \
 		--title="$TITLE" \
 		--window-icon="$WORLDSDIR/icon.png" \
 		--width=300 \
-		--height=300 \
+		--height=360 \
 		--cancel-label='Quit' \
 		--radiolist \
 		--text 'WorldsPlayer Linux' \
@@ -33,6 +36,7 @@ main() {
 		  FALSE 'Settings' \
 		  FALSE 'Clear Cache' \
 		  FALSE 'Force Kill' \
+		  FALSE 'Update' \
 		  FALSE 'Open Github page' 2>/dev/null)
 	case $sel in
 		'Launch Worlds')
@@ -56,6 +60,8 @@ main() {
 		'Force Kill' )
 			killw
 			main ;;
+		'Update' )
+			update ;;
 		'Open Github page' )
 			xdg-open "https://github.com/Vencorr/Worlds-LinuxScript"
 			main ;;
@@ -228,6 +234,17 @@ cache () {
 	else
 		zenity --error --text="Cachedir doesn't exist! Was it already cleared?" --width=240 --height=40 --title="$TITLE - Cachedir" --window-icon="$WORLDSDIR/icon.png"
 	fi
+}
+
+update () {
+	NEWLAUNCHFILE="https://raw.githubusercontent.com/Vencorr/Worlds-LinuxScript/master/launch.sh"
+	UPDATEFILE="$WORLDSDIR/.update.sh"
+	touch "$UPDATEFILE"
+	echo "wget -N -O\"$WORLDSDIR/launch.sh\" \"$NEWLAUNCHFILE\"" >> "$UPDATEFILE"
+	echo "chmod +x \"$WORLDSDIR/launch.sh\"" >> "$UPDATEFILE"
+	echo "\"$WORLDSDIR/launch.sh\"" >> "$UPDATEFILE"
+	chmod +x "$UPDATEFILE"
+	sh "$UPDATEFILE"
 }
 
 killw () {
