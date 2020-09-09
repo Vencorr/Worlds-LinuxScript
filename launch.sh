@@ -40,10 +40,10 @@ main() {
 		'Launch Worlds with Logger')
 			launch && tail -F "$WORLDSINSTALL/Gamma.Log.open" | zenity --text-info --auto-scroll --height=480 --width=768 --title="$TITLE - Log" --window-icon="$WORLDSDIR/icon.png" --text="Gamma.Log.open" ;;
 		'Worlds Organizer')
-			java -jar "$WORLDSDIR/WorldsOrganizer.jar"
-			if [[ $? -eq 1 ]]; then
-				wget -O"$WORLDSDIR/WorldsOrganizer" "https://wirlaburla.site/projects/WorldsOrganizer/dw/0.9.64/WorldsOrganizer-linux.jar"
+			if [[ ! -f "$WORLDSDIR/WorldsOrganizer.jar" ]]; then
+				wget -O"$WORLDSDIR/WorldsOrganizer.jar" "https://wirlaburla.site/projects/WorldsOrganizer/dw/0.9.64/WorldsOrganizer-linux.jar"
 			fi
+			java -jar "$WORLDSDIR/WorldsOrganizer.jar"
 			main ;;
 		'Open Worlds folder')
 			gio open "$WORLDSINSTALL" ;;
