@@ -102,6 +102,7 @@ work () {
 	codec
 	worlds
 	launchscript | zenity --progress --title="$WTITLE - Finalizing" --width=300 --height=50 --auto-close --auto-kill
+	chmod +x "$WORLDSDIR/launch.sh"
 	zenity --info --title="$WTITLE" --text="Worlds for Linux Wrapper has been setup and installed. You can now launch Worlds via the launch.sh script available at '$WORLDSDIR'." --width=340 --height=180
 }
 
