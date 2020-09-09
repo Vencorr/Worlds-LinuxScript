@@ -27,8 +27,8 @@ main() {
 		--column 'Options' \
 		--hide-header \
 		  TRUE 'Launch Worlds' \
-		  FALSE 'Open World' \
 		  FALSE 'Launch Worlds with Logger' \
+		  FALSE 'Worlds Organizer' \
 		  FALSE 'Open Worlds folder' \
 		  FALSE 'Settings' \
 		  FALSE 'Clear Cache' \
@@ -37,15 +37,14 @@ main() {
 	case $sel in
 		'Launch Worlds')
 			launch ;;
-		'Open World')
-			worldsel=$(zenity --title="$WTITLE - Open World" --width=600 --entry --text="Enter a worlds URL" --entry-text="home:GroundZero/groundzero.world")
-			if [[ ! $? -eq 1 ]]; then
-				"$WINE" "$WORLDSINSTALL/bin/gdkup.exe" "$worldsel"
-			else
-				main
-			fi ;;
 		'Launch Worlds with Logger')
 			launch && tail -F "$WORLDSINSTALL/Gamma.Log.open" | zenity --text-info --auto-scroll --height=480 --width=768 --title="$TITLE - Log" --window-icon="$WORLDSDIR/icon.png" --text="Gamma.Log.open" ;;
+		'Worlds Organizer')
+			java -jar "$WORLDSDIR/WorldsOrganizer.jar"
+			if [[ $? -eq 1 ]]; then
+				wget -O"$WORLDSDIR/WorldsOrganizer" "https://wirlaburla.site/projects/WorldsOrganizer/dw/0.9.64/WorldsOrganizer-linux.jar"
+			fi
+			main ;;
 		'Open Worlds folder')
 			gio open "$WORLDSINSTALL" ;;
 		'Settings' )
@@ -68,16 +67,17 @@ main() {
 }
 
 launch () {
-  WORLDSNEW="WorldsPlayer.exe"
-  WORLDSOLD="run.exe"
-  WORLDSLEGACY="run.bat"
-  if [ -f "$WORLDSINSTALL/$WORLDSNEW" ]; then
-    $WINE "$WORLDSINSTALL/$WORLDSNEW"
-  elif [ -f "$WORLDSINSTALL/$WORLDSOLD" ]; then
-    $WINE "$WORLDSINSTALL/$WORLDSOLD"
-  else
-    $WINE cmd /c "$WORLDSINSTALL/$WORLDSLEGACY"
-  fi
+	source "$WORLDSDIR/wrldscmd"
+	WORLDSNEW="WorldsPlayer.exe"
+	WORLDSOLD="run.exe"
+	WORLDSLEGACY="run.bat"
+	if [ -f "$WORLDSINSTALL/$WORLDSNEW" ]; then
+		$WINE "$WORLDSINSTALL/$WORLDSNEW"
+	elif [ -f "$WORLDSINSTALL/$WORLDSOLD" ]; then
+		$WINE "$WORLDSINSTALL/$WORLDSOLD"
+	else
+		$WINE cmd /c "$WORLDSINSTALL/$WORLDSLEGACY"
+	fi
 }
 
 settings () {
