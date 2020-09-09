@@ -9,7 +9,7 @@ export INSTALLER="$WORLDSDIR/WorldsInstaller.exe"
 
 export WINE=$(which wine)
 
-export WINETRICKSINSTALL="win7 corefonts droid ddr=gdi devenum wmp9 dmsynth wmv9vcm directplay quartz ie8"
+export WINETRICKSINSTALL="win7 corefonts droid ddr=gdi devenum wmp9 dmsynth wmv9vcm directplay quartz ie8 quartz"
 
 start () {
 	errorcheck
@@ -63,7 +63,6 @@ settings () {
 				TRUE '1922' \
 				FALSE '1920' \
 				FALSE '1900' \
-				FALSE "1890" \
 				FALSE 'Custom')
 			if [[ ! $? -eq 1 ]]; then
 				export WORLDSVER=$WORVERSEL
@@ -98,8 +97,6 @@ work () {
 		download1920
 	elif [[ "$WORLDSVER" -eq '1900' ]]; then
 		download1900
-	elif [[ "$WORLDSVER" -eq "1890" ]]; then
-		download1890
 	fi
 	tricks
 	codec
@@ -141,9 +138,7 @@ tricks () {
 
 codec() {
 	wget -O"$WORLDSDIR/K-Lite.exe" "https://files3.codecguide.com/K-Lite_Codec_Pack_1535_Full.exe" 2>&1 | sed -u 's/.* \([0-9]\+%\)\ \+\([0-9.]\+.\) \(.*\)/\1\n# Downloading at \2\/s, ETA \3/' | zenity --progress --title="$WTITLE - Downloading K-Lite" --text="Starting Download..." --width=300 --height=50 --auto-close --auto-kill
-	wget -O"$WORLDSDIR/LAVFilters.exe" "https://github.com/Nevcairiel/LAVFilters/releases/download/0.74.1/LAVFilters-0.74.1-Installer.exe" 2>&1 | sed -u 's/.* \([0-9]\+%\)\ \+\([0-9.]\+.\) \(.*\)/\1\n# Downloading at \2\/s, ETA \3/' | zenity --progress --title="$WTITLE - Downloading LAVFilters" --text="Starting Download..." --width=300 --height=50 --auto-close --auto-kill
 	$WINE "$WORLDSDIR/K-Lite.exe" 2>&1 | zenity --title="$WTITLE - Installing K-Lite" --text="Please complete the setup." --progress --pulsate --auto-close --width=300 --height=50 --auto-kill
-	$WINE "$WORLDSDIR/LAVFilters.exe" 2>&1 | zenity --title="$WTITLE - Installing LAVFilters" --text="Please complete the setup." --progress --pulsate --auto-close --width=300 --height=50 --auto-kill
 }
 
 worlds () {
