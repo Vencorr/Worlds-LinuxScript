@@ -1,5 +1,0 @@
-http://users.worldsonline.com/jimbly/java/jre-6u23-windows-i586-s.exe
-http://cache.worlds.com/downloads/1900/Worlds1900.exe
-https://files3.codecguide.com/K-Lite_Codec_Pack_1535_Full.exe
-https://github.com/Nevcairiel/LAVFilters/releases/download/0.74.1/LAVFilters-0.74.1-Installer.exe
-https://raw.githubusercontent.com/Vencorr/Worlds-LinuxScript/master/launch.sh
