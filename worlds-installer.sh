@@ -9,7 +9,7 @@ export INSTALLER="$WORLDSDIR/WorldsInstaller.exe"
 
 export WINE=$(which wine)
 
-export WINETRICKSINSTALL="win7 corefonts droid ddr=gdi devenum wmp9 dmsynth wmv9vcm directplay quartz ie8 quartz"
+export WINETRICKSINSTALL="win7 corefonts droid ddr=gdi devenum wmp9 dmsynth wmv9vcm directplay quartz ie8 quartz mimeassoc=off"
 
 start () {
 	errorcheck
