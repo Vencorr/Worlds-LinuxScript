@@ -3,7 +3,6 @@ export TITLE="Worlds Linux"
 export WORLDSDIR="$(dirname "$(readlink -f "$0")")"
 export WINEPREFIX=$WORLDSDIR/prefix
 export WORLDSINSTALL="$WINEPREFIX/drive_c/Program Files/Worlds/WorldsPlayer by Worlds.com"
-export SETTHEME="DEFAULT"
 export WINE="/usr/bin/wine"
 
 mkdir -p $WORLDSDIR/backups $WORLDSDIR/themes
@@ -94,7 +93,6 @@ settings () {
 		"Edit worlds.ini" "" \
 		"Wine Configuration" "" \
         "Winetricks" "" \
-		"Set Theme" "$SETTHEME" \
 		"Backup" "" \
 		"Restore" "" \
 		2>/dev/null)
@@ -126,9 +124,6 @@ settings () {
         'Winetricks')
 			winetricks
 			settings ;;
-		'Set Theme')
-			theme
-			settings ;;
 		'Backup')
 			backup
 			settings ;;
@@ -142,54 +137,6 @@ settings () {
 	echo "export WORLDSINSTALL=\"$WORLDSINSTALL\"" >> "$WORLDSDIR/wrldslinux"
 	echo "export SETTHEME=\"$SETTHEME\"" >> "$WORLDSDIR/wrldslinux"
 	echo "source \"$WORLDSDIR/wrldscmd\"" >> "$WORLDSDIR/wrldslinux"
-}
-
-theme () {
-	declare -a acceptimg=(
-		"actb.gif"
-		"actm.gif"
-		"actt.gif"
-		"back.gif"
-		"changeav.gif"
-		"drive.gif"
-		"dyrwtq.gif"
-		"explore.gif"
-		"friends.gif"
-		"hangong.gif"
-		"mfriends.gif"
-		"moreinfo.gif"
-		"notavail.gif"
-		"opnscrnc.gif"
-		"override.ini"
-		"pwc.gif"
-		"quit.gif"
-		"rtpanel.gif"
-	)
-	declare -A map
-	for key in "${!acceptimg[@]}"; do map[${acceptimg[$key]}]="$key"; done
-
-
-	mkdir -p "$WORLDSDIR/themes"
-	cd "$WORLDSDIR/themes"
-	# Due to some bug, this won't even accept a directory despite the option being defined. Instead using text entry.
-	# seltheme=$(zenity --file-selection --directory --title="Select a theme folder" --window-icon="$WORLDSDIR/icon.png")
-	seltheme=$(zenity --entry --title="$WTITLE - Worlds Theme" --text="Enter a theme directory." --entry-text="$WORLDSDIR/themes/" --window-icon="$WORLDSDIR/icon.png")
-	if [[ ! $? -eq 1 ]]; then
-		rename 'y/A-Z/a-z/' "$seltheme/*"
-		for i in $seltheme/*;
-			do FILENAME="$(basename $i)"
-			if [[ -n "${map[$i]}" ]]; then
-				echo "$seltheme/$FILENAME >> $WORLDSINSTALL/$FILENAME"
-				ln -sf "$seltheme/$FILENAME" "$WORLDSINSTALL/$FILENAME"
-			fi
-		done
-		export SETTHEME="$(basename $seltheme)"
-		zenity --info --text="Successfully set theme to $(basename $seltheme)." --width=240 --height=40  --title="$TITLE - Theme" --window-icon="$WORLDSDIR/icon.png"
-	else
-		zenity --error --text="Couldn't set $(basename $seltheme). Does it exist?" --width=240 --height=40  --title="$TITLE - Theme" --window-icon="$WORLDSDIR/icon.png"
-	fi
-	cd "$WORLDSINSTALL"
-	settings
 }
 
 backup () {

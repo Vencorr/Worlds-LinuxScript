@@ -155,7 +155,6 @@ launchscript () {
 	echo "export WINEPREFIX=$WINEPREFIX" >> "$WORLDSDIR/wrldslinux"
 	echo "export WORLDSDIR=$WORLDSDIR" >> "$WORLDSDIR/wrldslinux"
 	echo "export WORLDSINSTALL=$WORLDSINSTALL" >> "$WORLDSDIR/wrldslinux"
-	echo "export SETTHEME=DEFAULT" >> "$WORLDSDIR/wrldslinux"
 	echo "source \"$WORLDSDIR/wlrdscmd\"" >> "$WORLDSDIR/wrldslinux"
 	rm "$HOME/Desktop/WorldsPlayer Win7.*"
 }
