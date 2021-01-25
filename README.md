@@ -13,8 +13,8 @@ $ ./worlds-installer.sh
 
 All worlds content should be in a folder named "Worlds" in the same location your install script resides. A launch script named `launch.sh` should be in it's root. This is the script that you should run. Now you can make a desktop entry pointing to that script and enjoy Worlds.
 
-![](https://github.com/Vencorr/Worlds-LinuxScript/blob/master/image.png)
+![](https://github.com/Vencorr/Worlds-LinuxScript/blob/master/launcher.png)
 
-![](https://i.imgur.com/1jjA7WM.png)
+![](https://github.com/Vencorr/Worlds-LinuxScript/blob/master/app.png)
 
-*WorldsPlayer is property of Worlds Inc. I do not own WorldsPlayer and these scripts in no way modify the client.*
+*WorldsPlayer and it's logo is property of Worlds Inc. and all rights belong to them.*

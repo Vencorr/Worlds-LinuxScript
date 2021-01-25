@@ -44,7 +44,8 @@ main() {
 			launch && tail -F "$WORLDSINSTALL/Gamma.Log.open" | zenity --text-info --auto-scroll --height=480 --width=768 --title="$TITLE - Log" --window-icon="$WORLDSDIR/icon.png" --text="Gamma.Log.open" ;;
 		'Worlds Organizer')
 			if [[ ! -f "$WORLDSDIR/WorldsOrganizer.jar" ]]; then
-				wget -O"$WORLDSDIR/WorldsOrganizer.jar" "https://wirlaburla.site/projects/WorldsOrganizer/dw/0.9.64/WorldsOrganizer-linux.jar"
+                zenity --info --text="The launcher will now download WorldsOrganizer using wget and run it." --width=280 --height=40 --title="$TITLE - WorldsOrganizer" --window-icon="$WORLDSDIR/icon.png"
+				wget -O"$WORLDSDIR/WorldsOrganizer.jar" "https://wirlaburla.com/WorldsOrganizer/dw/0.9.64/WorldsOrganizer-linux.jar" | zenity --progress --no-cancel --title="$TITLE - Downloading WorldsOrganizer" --width=300 --height=50 --auto-close --auto-kill
 			fi
 			java -jar "$WORLDSDIR/WorldsOrganizer.jar"
 			main ;;
@@ -60,19 +61,14 @@ main() {
 			killw
 			main ;;
 		'Update' )
-			update ;;
+			update | zenity --progress --no-cancel --title="$TITLE - Updating" --width=300 --height=50 --auto-close --auto-kill;;
 		'Open Github page' )
 			xdg-open "https://github.com/Vencorr/Worlds-LinuxScript"
 			main ;;
 	esac
-	if [ "$?" != 0 ]
-	then
-		exit
-	fi
 }
 
 launch () {
-	source "$WORLDSDIR/wrldscmd"
 	WORLDSNEW="WorldsPlayer.exe"
 	WORLDSOLD="run.exe"
 	WORLDSLEGACY="run.bat"
@@ -82,6 +78,10 @@ launch () {
 		$WINE "$WORLDSINSTALL/$WORLDSOLD"
 	else
 		$WINE cmd /c "$WORLDSINSTALL/$WORLDSLEGACY"
+	fi
+
+	if [ $? -ne 0 ]; then
+        launch
 	fi
 }
 
@@ -135,7 +135,6 @@ settings () {
 	echo "export WINE=\"$WINE\"" >> "$WORLDSDIR/wrldslinux"
 	echo "export WINEPREFIX=\"$WINEPREFIX\"" >> "$WORLDSDIR/wrldslinux"
 	echo "export WORLDSINSTALL=\"$WORLDSINSTALL\"" >> "$WORLDSDIR/wrldslinux"
-	echo "export SETTHEME=\"$SETTHEME\"" >> "$WORLDSDIR/wrldslinux"
 	echo "source \"$WORLDSDIR/wrldscmd\"" >> "$WORLDSDIR/wrldslinux"
 }
 
@@ -195,7 +194,7 @@ update () {
 }
 
 killw () {
-	killall WorldsPlayer.exe run.exe javaw.exe jrew.exe run.bat | zenity --progress --no-buttons --title="$TITLE - Killing Processes" --width=300 --height=50 --auto-close --auto-kill
+	killall WorldsPlayer.exe run.exe javaw.exe jrew.exe run.bat | zenity --progress --no-cancel --title="$TITLE - Killing Processes" --width=300 --height=50 --auto-close --auto-kill
 	zenity --error --text="Killed all possible running processes of Worlds." --width=240 --height=40 --title="$TITLE - Kill" --window-icon="$WORLDSDIR/icon.png"
 }
 
