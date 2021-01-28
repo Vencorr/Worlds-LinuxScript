@@ -163,9 +163,10 @@ launchscript () {
 
 menufile () {
     wget -O"$WORLDSDIR/worlds.desktop" "https://raw.githubusercontent.com/Vencorr/Worlds-LinuxScript/master/worlds.desktop"
+    echo "" > "$HOME/.local/share/applications/worlds.desktop" #Making sure the file is clear.
     while read line 
     do
-        line=${line/\${WORLDSDIR\}/$directory}
+        line=${line/\${WORLDSDIR\}/$WORLDSDIR}
         echo $line >> "$HOME/.local/share/applications/worlds.desktop"
     done < "$WORLDSDIR/worlds.desktop"
 }
