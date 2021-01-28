@@ -158,6 +158,16 @@ launchscript () {
 	echo "source \"$WORLDSDIR/wlrdscmd\"" >> "$WORLDSDIR/wrldslinux"
 	touch "$WORLDSDIR/wlrdscmd"
 	rm "$HOME/Desktop/WorldsPlayer Win7.*"
+	menufile
+}
+
+menufile () {
+    wget -O"$WORLDSDIR/worlds.desktop" "https://raw.githubusercontent.com/Vencorr/Worlds-LinuxScript/master/worlds.desktop"
+    while read line 
+    do
+        line=${line/\${WORLDSDIR\}/$directory}
+        echo $line >> "$HOME/.local/share/applications/worlds.desktop"
+    done < "$WORLDSDIR/worlds.desktop"
 }
 
 start
