@@ -23,7 +23,7 @@ errorcheck () {
 }
 
 settings () {
-	SelOptions=$(zenity --list --title="$WTITLE - Settings" --text="Installer Options for $WTITLE" --column='Option' --column='Value' --ok-label='Edit' --cancel-label='Exit' --extra-button='Next' --width=400 --height=260 \
+	SelOptions=$(zenity --list --title="$WTITLE - Settings" --text="Installer Options for $WTITLE" --column='Option' --column='Value' --cancel-label='Exit' --extra-button='Next' --width=400 --height=260 \
 	"Install Location" "$WORLDSDIR" \
 	"Wine Location" "$WINE" \
 	"Prefix Location" "$WINEPREFIX" \
@@ -113,18 +113,18 @@ download1922 () {
 
 download1920 () {
 	export WORLDSINSTALL="$WINEPREFIX/drive_c/Program Files/Worlds.com/WorldsPlayer - Win7"
-	wget -O$INSTALLER "https://wirlaburla.site/library/WorldsPlayer/Software/Worlds1920.exe" 2>&1 | sed -u 's/.* \([0-9]\+%\)\ \+\([0-9.]\+.\) \(.*\)/\1\n# Downloading at \2\/s, ETA \3/' | zenity --progress --title="$WTITLE - Worlds $WORLDSVER" --text="Starting Download.." --width=300 --height=50 --auto-close --auto-kill
+	wget -O$INSTALLER "https://wirlaburla.com/library/WorldsPlayer/Software/Worlds1920.exe" 2>&1 | sed -u 's/.* \([0-9]\+%\)\ \+\([0-9.]\+.\) \(.*\)/\1\n# Downloading at \2\/s, ETA \3/' | zenity --progress --title="$WTITLE - Worlds $WORLDSVER" --text="Starting Download.." --width=300 --height=50 --auto-close --auto-kill
 }
 
 download1900 () {
 	export WORLDSINSTALL="$WINEPREFIX/drive_c/Program Files/Worlds/WorldsPlayer by Worlds.com"
-	wget -O$INSTALLER "https://wirlaburla.site/library/WorldsPlayer/Software/Worlds1900.exe" 2>&1 | sed -u 's/.* \([0-9]\+%\)\ \+\([0-9.]\+.\) \(.*\)/\1\n# Downloading at \2\/s, ETA \3/' | zenity --progress --title="$WTITLE - Worlds $WORLDSVER" --text="Starting Download..." --width=300 --height=50 --auto-close --auto-kill
+	wget -O$INSTALLER "https://wirlaburla.com/library/WorldsPlayer/Software/Worlds1900.exe" 2>&1 | sed -u 's/.* \([0-9]\+%\)\ \+\([0-9.]\+.\) \(.*\)/\1\n# Downloading at \2\/s, ETA \3/' | zenity --progress --title="$WTITLE - Worlds $WORLDSVER" --text="Starting Download..." --width=300 --height=50 --auto-close --auto-kill
 	java
 }
 
 download1890 () {
 	export WORLDSINSTALL="$WINEPREFIX/drive_c/Program Files/Worlds/WorldsPlayer by Worlds.com"
-	wget -O$INSTALLER "https://wirlaburla.site/library/WorldsPlayer/Software/Worlds1890.exe" 2>&1 | sed -u 's/.* \([0-9]\+%\)\ \+\([0-9.]\+.\) \(.*\)/\1\n# Downloading at \2\/s, ETA \3/' | zenity --progress --title="$WTITLE - Worlds $WORLDSVER" --text="Starting Download..." --width=300 --height=50 --auto-close --auto-kill
+	wget -O$INSTALLER "https://wirlaburla.com/library/WorldsPlayer/Software/Worlds1890.exe" 2>&1 | sed -u 's/.* \([0-9]\+%\)\ \+\([0-9.]\+.\) \(.*\)/\1\n# Downloading at \2\/s, ETA \3/' | zenity --progress --title="$WTITLE - Worlds $WORLDSVER" --text="Starting Download..." --width=300 --height=50 --auto-close --auto-kill
 	java
 }
 
@@ -151,11 +151,12 @@ launchscript () {
 	wget -O"$WORLDSDIR/icon.png" "https://raw.githubusercontent.com/Vencorr/Worlds-LinuxScript/master/icon.png"
 	rm "$WORLDSDIR/wrldslinux"
 	echo "# Configuration for Worlds on Linux." > "$WORLDSDIR/wrldslinux"
-	echo "export WINE=$WINE" >> "$WORLDSDIR/wrldslinux"
-	echo "export WINEPREFIX=$WINEPREFIX" >> "$WORLDSDIR/wrldslinux"
-	echo "export WORLDSDIR=$WORLDSDIR" >> "$WORLDSDIR/wrldslinux"
-	echo "export WORLDSINSTALL=$WORLDSINSTALL" >> "$WORLDSDIR/wrldslinux"
+	echo "export WINE=\"$WINE\"" >> "$WORLDSDIR/wrldslinux"
+	echo "export WINEPREFIX=\"$WINEPREFIX\"" >> "$WORLDSDIR/wrldslinux"
+	echo "export WORLDSDIR=\"$WORLDSDIR\"" >> "$WORLDSDIR/wrldslinux"
+	echo "export WORLDSINSTALL=\"$WORLDSINSTALL\"" >> "$WORLDSDIR/wrldslinux"
 	echo "source \"$WORLDSDIR/wlrdscmd\"" >> "$WORLDSDIR/wrldslinux"
+	touch "$WORLDSDIR/wlrdscmd"
 	rm "$HOME/Desktop/WorldsPlayer Win7.*"
 }
 
