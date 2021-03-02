@@ -47,7 +47,7 @@ main() {
                 zenity --info --text="The launcher will now download WorldsOrganizer using wget and run it." --width=280 --height=40 --title="$TITLE - WorldsOrganizer" --window-icon="$WORLDSDIR/icon.png"
 				wget -O"$WORLDSDIR/WorldsOrganizer.jar" "https://wirlaburla.com/WorldsOrganizer/dw/0.9.64/WorldsOrganizer-linux.jar" | zenity --progress --no-cancel --title="$TITLE - Downloading WorldsOrganizer" --width=300 --height=50 --auto-close --auto-kill
 			fi
-			java -jar "$WORLDSDIR/WorldsOrganizer.jar"
+			java -jar "$WORLDSDIR/WorldsOrganizer.jar" -i "$WORLDSINSTALL/gamma.avatars"  -i "$WORLDSINSTALL/gamma.worldsmarks"
 			main ;;
 		'Open Worlds folder')
 			gio open "$WORLDSINSTALL" ;;
