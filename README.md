@@ -1,3 +1,6 @@
+# MOVED
+The git repository has been moved to https://wirlaburla.com/git/Wirlaburla/Worlds-LinuxScript
+
 # Worlds-LinuxScript
 Simple Linux wrapper for WorldsPlayer.
 
